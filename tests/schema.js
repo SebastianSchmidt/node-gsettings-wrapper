@@ -12,7 +12,7 @@ describe("Schema", () => {
     });
 
     it("should return array which contains schemata", () => {
-      const schema = Schema.getById("org.gnome.desktop.interface");
+      const schema = Schema.getById("org.gtk.Demo");
       expect(Schema.getAll()).to.contain(schema);
     });
 
@@ -29,7 +29,7 @@ describe("Schema", () => {
     });
 
     it("should return true if there is a schema with the id", () => {
-      expect(Schema.exists("org.gnome.desktop.interface")).to.be.true;
+      expect(Schema.exists("org.gtk.Demo")).to.be.true;
     });
 
   });
@@ -41,7 +41,7 @@ describe("Schema", () => {
     });
 
     it("should return schema object it there is a schema with the id", () => {
-      expect(Schema.getById("org.gnome.desktop.interface"))
+      expect(Schema.getById("org.gtk.Demo"))
         .to.be.an.instanceof(Schema);
     });
 
@@ -50,7 +50,7 @@ describe("Schema", () => {
   describe("#getId", () => {
 
     it("should return schema id", () => {
-      const id = "org.gnome.desktop.interface";
+      const id = "org.gtk.Demo";
       const schema = Schema.getById(id);
       expect(schema.getId()).to.be.equal(id);
     });
