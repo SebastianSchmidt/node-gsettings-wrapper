@@ -1,5 +1,7 @@
 # node-gsettings-wrapper
 
+![Build Status](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper.svg?branch=master)
+
 Wrapper around the gsettings command line tool.
 
 ```
