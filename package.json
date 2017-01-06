@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "test": "gulp dev:test",
+    "test-travis": "gulp dev:test && gulp prepare-publish",
     "prepare-publish": "gulp prepare-publish"
   },
   "repository": {
@@ -30,6 +31,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
