@@ -1,6 +1,7 @@
 # node-gsettings-wrapper
 
-![Build Status](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper.svg?branch=master)
+[![Build Status](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper.svg?branch=master)](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper)
+[![Coverage Status](https://coveralls.io/repos/github/SebastianSchmidt/node-gsettings-wrapper/badge.svg)](https://coveralls.io/github/SebastianSchmidt/node-gsettings-wrapper)
 
 Wrapper around the gsettings command line tool.
 
