@@ -1,0 +1,51 @@
+{
+  "private": true,
+  "name": "node-gsettings-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper around the gsettings command line tool.",
+  "homepage": "https://github.com/SebastianSchmidt/node-gsettings-wrapper",
+  "keywords": [
+    "gsettings",
+    "dconf"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "gulp dev:test",
+    "prepare-publish": "gulp prepare-publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SebastianSchmidt/node-gsettings-wrapper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SebastianSchmidt/node-gsettings-wrapper/issues"
+  },
+  "author": "Sebastian Schmidt",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-babel-istanbul": "^1.5.0",
+    "gulp-istanbul-enforcer": "^1.0.3",
+    "gulp-mocha": "^3.0.1",
+    "isparta": "^4.0.0",
+    "mocha": "^3.2.0",
+    "run-sequence": "^1.2.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "add-module-exports"
+    ]
+  }
+}
