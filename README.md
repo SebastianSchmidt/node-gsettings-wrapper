@@ -5,12 +5,28 @@
 
 Wrapper around the gsettings command line tool.
 
+## Installation
+
 ```
-npm install --save node-gsettings-wrapper
+npm install node-gsettings-wrapper --save
 ```
 
 
-## API
+## Examples
+
+```javascript
+const { Schema, Key } = require("node-gsettings-wrapper");
+
+// Display all available schemata:
+Schema.getAll().forEach((schema) => {
+  console.log(schema.getId());
+});
+
+// Display all keys of schema org.gtk.Demo:
+Schema.getById("org.gtk.Demo").getAllKeys().forEach((key) => {
+  console.log(key.getId());
+});
+```
 
 
 ## Roadmap
