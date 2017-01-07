@@ -2,6 +2,7 @@ import { describe, it } from "mocha";
 import { expect } from "chai";
 
 import Schema from "../src/schema";
+import Key from "../src/key";
 
 describe("Schema", () => {
 
@@ -53,6 +54,36 @@ describe("Schema", () => {
       const id = "org.gtk.Demo";
       const schema = Schema.getById(id);
       expect(schema.getId()).to.be.equal(id);
+    });
+
+  });
+
+  describe("#getAllKeys", () => {
+
+    it("should return array", () => {
+      const schema = Schema.getById("org.gtk.Demo");
+      expect(schema.getAllKeys()).to.be.an.instanceof(Array);
+    });
+
+    it("should return array which contains keys", () => {
+
+      const schema = Schema.getById("org.gtk.Demo");
+
+      const expectedKeys = [
+        new Key(schema, "color"),
+        new Key(schema, "fullscreen"),
+        new Key(schema, "maximized"),
+        new Key(schema, "window-size")
+      ];
+
+      const keys = schema.getAllKeys();
+
+      expect(keys.length).to.equal(expectedKeys.length);
+
+      expectedKeys.forEach((key) => {
+        expect(keys).to.contain(key);
+      });
+
     });
 
   });
