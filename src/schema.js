@@ -1,6 +1,6 @@
 import { spawnSync } from "child_process";
-import { transformOutputToArray } from "./utils";
 
+import { transformOutputToArray } from "./utils";
 import Key from "./key";
 
 export default class Schema {

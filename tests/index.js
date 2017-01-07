@@ -2,7 +2,6 @@ import { describe, it } from "mocha";
 import { expect } from "chai";
 
 import GSettings from "../src/index";
-import Schema from "../src/schema";
 
 describe("GSettings", () => {
 
@@ -11,7 +10,11 @@ describe("GSettings", () => {
   });
 
   it("should export Schema", () => {
-    expect(GSettings.Schema).to.be.an("function");
+    expect(GSettings.Schema).to.be.a("function");
+  });
+
+  it("should export Key", () => {
+    expect(GSettings.Key).to.be.a("function");
   });
 
 });

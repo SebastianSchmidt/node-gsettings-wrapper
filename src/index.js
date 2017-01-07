@@ -1,3 +1,4 @@
 import Schema from "./schema";
+import Key from "./key";
 
-export default { Schema };
+export default { Schema, Key };
