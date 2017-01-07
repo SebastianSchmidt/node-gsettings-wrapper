@@ -58,17 +58,17 @@ describe("Schema", () => {
 
   });
 
-  describe("#getAllKeys", () => {
+  describe("#getKeys", () => {
 
     it("should return array", () => {
       const schema = Schema.getById("org.gtk.Demo");
-      expect(schema.getAllKeys()).to.be.an.instanceof(Array);
+      expect(schema.getKeys()).to.be.an.instanceof(Array);
     });
 
     it("should return array which contains keys", () => {
       const schema = Schema.getById("org.gtk.Demo");
       const expectedKey = new Key(schema, "color");
-      expect(schema.getAllKeys()).to.contain(expectedKey);
+      expect(schema.getKeys()).to.contain(expectedKey);
     });
 
   });

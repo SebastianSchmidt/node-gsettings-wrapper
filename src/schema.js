@@ -47,7 +47,7 @@ export default class Schema {
     return this._id;
   }
 
-  getAllKeys() {
+  getKeys() {
 
     const process = spawnSync("gsettings", ["list-keys", this._id]);
     const output = transformOutputToArray(process.stdout);
