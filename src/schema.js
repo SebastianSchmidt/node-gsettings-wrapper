@@ -1,17 +1,14 @@
 import { spawnSync } from "child_process";
+import { transformOutputToArray } from "./utils";
 
 export default class Schema {
 
   static getAll() {
 
     const process = spawnSync("gsettings", ["list-schemas"]);
-    const output = process.stdout.toString();
+    const output = transformOutputToArray(process.stdout);
 
-    const ids = output.split("\n").filter((value) => {
-      return value !== "";
-    });
-
-    return ids.map((id) => {
+    return output.map((id) => {
       return new Schema(id);
     });
 
