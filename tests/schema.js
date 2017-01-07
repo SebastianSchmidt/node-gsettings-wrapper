@@ -66,28 +66,9 @@ describe("Schema", () => {
     });
 
     it("should return array which contains keys", () => {
-
       const schema = Schema.getById("org.gtk.Demo");
-
-      const expectedKeys = [
-        new Key(schema, "color"),
-        new Key(schema, "fullscreen"),
-        new Key(schema, "maximized"),
-        new Key(schema, "window-size")
-      ];
-
-      const keys = schema.getAllKeys();
-
-      keys.forEach((key) => {
-        console.log(key);
-      });
-
-      expectedKeys.forEach((key) => {
-        expect(keys).to.contain(key);
-      });
-
-      expect(keys.length).to.equal(expectedKeys.length);
-
+      const expectedKey = new Key(schema, "color");
+      expect(schema.getAllKeys()).to.contain(expectedKey);
     });
 
   });
