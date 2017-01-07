@@ -78,11 +78,11 @@ describe("Schema", () => {
 
       const keys = schema.getAllKeys();
 
-      expect(keys.length).to.equal(expectedKeys.length);
-
       expectedKeys.forEach((key) => {
         expect(keys).to.contain(key);
       });
+
+      expect(keys.length).to.equal(expectedKeys.length);
 
     });
 
