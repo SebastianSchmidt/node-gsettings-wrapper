@@ -48,6 +48,18 @@ describe("parseKeyValue", () => {
       expect(parseKeyValue("-42.24")).to.equal(-42.24);
     });
 
+    it("should return parsed number if data type int is defined", () => {
+      expect(parseKeyValue("int64 123")).to.equal(123);
+    });
+
+    it("should return parsed number if data type uint is defined", () => {
+      expect(parseKeyValue("uint32 100")).to.equal(100);
+    });
+
+    it("should return parsed byte", () => {
+      expect(parseKeyValue("byte 0x23")).to.equal(35);
+    });
+
   });
 
   describe("Boolean", () => {

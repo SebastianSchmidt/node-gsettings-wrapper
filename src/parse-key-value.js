@@ -82,11 +82,20 @@ function parseString(value) {
 // Number:
 
 function isNumber(value) {
-  return !isNaN(value);
+  return !isNaN(value) ||
+         value.startsWith("int") ||
+         value.startsWith("uint") ||
+         value.startsWith("byte");
 }
 
 function parseNumber(value) {
-  return Number(value);
+
+  if (!isNaN(value)) {
+    return Number(value);
+  } else {
+    return Number(value.substring(value.indexOf(" ")));
+  }
+
 }
 
 
