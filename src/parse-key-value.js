@@ -30,6 +30,9 @@ export default function parseKeyValue(output) {
     case TYPE_OBJECTPATH:
       result = parseObjectpath(value);
       break;
+    case TYPE_MAYBE:
+      result = parseMaybe(value);
+      break;
   }
 
   return result;
@@ -46,6 +49,7 @@ const TYPE_ARRAY = Symbol("Array");
 const TYPE_TUPLE = Symbol("Tuple");
 const TYPE_DICTIONARY = Symbol("Dictionary");
 const TYPE_OBJECTPATH = Symbol("Objectpath");
+const TYPE_MAYBE = Symbol("Maybe");
 const TYPE_UNKNOWN = Symbol("unknown");
 
 function detectValueType(output) {
@@ -66,6 +70,8 @@ function detectValueType(output) {
     return TYPE_DICTIONARY;
   } else if (isObjectpath(value)) {
     return TYPE_OBJECTPATH;
+  } else if (isMaybe(value)) {
+    return TYPE_MAYBE;
   } else {
     return TYPE_UNKNOWN;
   }
@@ -260,4 +266,23 @@ function isObjectpath(value) {
 
 function parseObjectpath(value) {
   return parseString(value.substring(10).trim());
+}
+
+
+// Maybe:
+
+function isMaybe(value) {
+  return value.startsWith("@m");
+}
+
+function parseMaybe(value) {
+
+  const withoutPrefix = value.substring(value.indexOf(" ") + 1);
+
+  if (withoutPrefix !== "nothing") {
+    return parseKeyValue(withoutPrefix);
+  } else {
+    return null;
+  }
+
 }

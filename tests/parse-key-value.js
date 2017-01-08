@@ -211,6 +211,18 @@ describe("parseKeyValue", () => {
 
   });
 
+  describe("Maybe", () => {
+
+    it("should return null if nothing", () => {
+      expect(parseKeyValue("@ms nothing")).to.be.null;
+    });
+
+    it("should return parsed value if not nothing", () => {
+      expect(parseKeyValue("@ms 'hello'")).to.equal("hello");
+    });
+
+  });
+
   describe("Other", () => {
 
     it("should return null if output is null", () => {
