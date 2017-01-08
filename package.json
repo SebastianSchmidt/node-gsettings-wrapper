@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "node-gsettings-wrapper",
   "version": "0.1.0",
   "description": "Wrapper around the gsettings command line tool.",
