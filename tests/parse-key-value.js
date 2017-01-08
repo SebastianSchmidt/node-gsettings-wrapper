@@ -49,6 +49,55 @@ describe("parseKeyValue", () => {
 
   });
 
+  describe("Array", () => {
+
+    it("should return array", () => {
+      expect(parseKeyValue("[123, 456]")).to.be.an.instanceof(Array);
+    });
+
+    it("should return array of numbers", () => {
+      const expected = [123, 456, 789];
+      expect(parseKeyValue("[123, 456, 789]")).to.deep.equal(expected);
+    });
+
+    it("should return array of strings", () => {
+      const expected = ["Hello, ", "world!"];
+      expect(parseKeyValue("['Hello, ', 'world!']")).to.deep.equal(expected);
+    });
+
+    it("should return array of boolean values", () => {
+      const expected = [true, false, true];
+      expect(parseKeyValue("[true, false, true]")).to.deep.equal(expected);
+    });
+
+    it("should return array of arrays of numbers", () => {
+      const expected = [[123, 456], [789, 123]];
+      expect(parseKeyValue("[[123, 456], [789, 123]]")).to.deep.equal(expected);
+    });
+
+    it("should return array of arrays of strings", () => {
+      const expected = [["Hello, ", "wonderful "], ["world", "!"]];
+      expect(parseKeyValue("[['Hello, ', 'wonderful '], ['world', '!']]"))
+        .to.deep.equal(expected);
+    });
+
+    it("should return empty array if @as []", () => {
+      const expected = [];
+      expect(parseKeyValue("@as []")).to.deep.equal(expected);
+    });
+
+    it("should return empty array if @a(ss) []", () => {
+      const expected = [];
+      expect(parseKeyValue("@a(ss) []")).to.deep.equal(expected);
+    });
+
+    it("should return array of empty arrays", () => {
+      const expected = [[], [], []];
+      expect(parseKeyValue("[@as [], @as [], @as []]")).to.deep.equal(expected);
+    });
+
+  });
+
   describe("Tuple", () => {
 
     it("should return array", () => {
@@ -73,6 +122,12 @@ describe("parseKeyValue", () => {
     it("should return array of arrays of numbers", () => {
       const expected = [[123, 456], [789, 123]];
       expect(parseKeyValue("((123, 456), (789, 123))")).to.deep.equal(expected);
+    });
+
+    it("should return array of arrays of strings", () => {
+      const expected = [["Hello, ", "wonderful "], ["world", "!"]];
+      expect(parseKeyValue("(('Hello, ', 'wonderful '), ('world', '!'))"))
+        .to.deep.equal(expected);
     });
 
   });

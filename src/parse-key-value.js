@@ -18,6 +18,9 @@ export function parseKeyValue(output) {
     case TYPE_BOOLEAN:
       result = parseBoolean(value);
       break;
+    case TYPE_ARRAY:
+      result = parseArray(value);
+      break;
     case TYPE_TUPLE:
       result = parseTuple(value);
       break;
@@ -33,6 +36,7 @@ export function parseKeyValue(output) {
 const TYPE_STRING = Symbol("String");
 const TYPE_NUMBER = Symbol("Number");
 const TYPE_BOOLEAN = Symbol("Boolean");
+const TYPE_ARRAY = Symbol("Array");
 const TYPE_TUPLE = Symbol("Tuple");
 const TYPE_UNKNOWN = Symbol("unknown");
 
@@ -46,6 +50,8 @@ function detectValueType(output) {
     return TYPE_NUMBER;
   } else if (isBoolean(value)) {
     return TYPE_BOOLEAN;
+  } else if (isArray(value)) {
+    return TYPE_ARRAY;
   } else if (isTuple(value)) {
     return TYPE_TUPLE;
   } else {
@@ -85,6 +91,18 @@ function isBoolean(value) {
 
 function parseBoolean(value) {
   return value === "true";
+}
+
+
+// Array:
+
+function isArray(value) {
+  return (value.startsWith("[") && value.endsWith("]")) ||
+         (value.startsWith("@a") && value.endsWith("[]"));
+}
+
+function parseArray(value) {
+  return parseTuple(value);
 }
 
 
