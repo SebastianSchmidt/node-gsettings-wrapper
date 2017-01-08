@@ -70,7 +70,8 @@ function detectValueType(output) {
 // String:
 
 function isString(value) {
-  return value.startsWith("'") && value.endsWith("'");
+  return (value.startsWith("'") && value.endsWith("'")) ||
+         (value.startsWith("\"") && value.endsWith("\""));
 }
 
 function parseString(value) {

@@ -15,6 +15,11 @@ describe("parseKeyValue", () => {
       expect(parseKeyValue("'Hello World'")).to.equal("Hello World");
     });
 
+    it("should return parsed string without surrounding " +
+       "double quotation marks", () => {
+      expect(parseKeyValue("\"Hello ' World\"")).to.equal("Hello ' World");
+    });
+
     it("should return empty string", () => {
       expect(parseKeyValue("''")).to.equal("");
     });
