@@ -5,6 +5,33 @@ import parseKeyValue from "./parse-key-value";
 
 export default class Key {
 
+  static exists(schemaId, keyId) {
+
+    if (typeof schemaId !== "string") {
+      throw new TypeError("schemaId is not a string.");
+    }
+
+    if (typeof keyId !== "string") {
+      throw new TypeError("keyId is not a string.");
+    }
+
+    const process = spawnSync("gsettings", ["get", schemaId, keyId]);
+    const exitCode = process.status;
+
+    return exitCode === 0;
+
+  }
+
+  static findById(schemaId, keyId) {
+
+    if (!Key.exists(schemaId, keyId)) {
+      return null;
+    }
+    
+    return new Key(new Schema(schemaId), keyId);
+
+  }
+
   constructor(schema, id) {
 
     if (!(schema instanceof Schema)) {
