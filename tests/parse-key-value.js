@@ -132,6 +132,44 @@ describe("parseKeyValue", () => {
 
   });
 
+  describe("Dictionary", () => {
+
+    it("should return object", () => {
+      expect(parseKeyValue("{'lorem': 'ipsum'}")).to.be.an("object");
+    });
+
+    it("should return object representing key-value pairs", () => {
+
+      const expected = {
+        "message": "Hello, world!",
+        "level:over": 9000,
+      };
+
+      const dictionaryString = "{'message': 'Hello, world!', " +
+                                "'level:over': 9000}";
+
+      expect(parseKeyValue(dictionaryString)).to.deep.equal(expected);
+
+    });
+
+    it("should convert no-string-keys to string-keys", () => {
+      const expected = { "true": 123 };
+      const dictionaryString = "{true: 123}";
+      expect(parseKeyValue(dictionaryString)).to.deep.equal(expected);
+    });
+
+    it("should return empty object if dictionary is invalid", () => {
+      expect(parseKeyValue("{invalid}")).to.deep.equal({});
+    });
+
+    it("should return empty object if @a{ii} {}", () => {
+      const expected = {};
+      const dictionaryString = "@a{ii} {}";
+      expect(parseKeyValue(dictionaryString)).to.deep.equal(expected);
+    });
+
+  });
+
   describe("Other", () => {
 
     it("should return null if output is null", () => {
