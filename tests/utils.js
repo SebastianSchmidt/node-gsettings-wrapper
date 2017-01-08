@@ -19,6 +19,18 @@ describe("Utils", () => {
       expect(transformOutputToArray(output)).to.deep.equal(expected);
     });
 
+    it("should return an empty array if output is an empty string", () => {
+      expect(transformOutputToArray("")).to.be.an.instanceof(Array);
+    });
+
+    it("should return an empty array if output is null", () => {
+      expect(transformOutputToArray(null)).to.be.an.instanceof(Array);
+    });
+
+    it("should return an empty array if output is undefined", () => {
+      expect(transformOutputToArray()).to.be.an.instanceof(Array);
+    });
+
   });
 
 });
