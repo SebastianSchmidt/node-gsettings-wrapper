@@ -1,5 +1,6 @@
 # node-gsettings-wrapper
 
+[![NPM version](https://img.shields.io/npm/v/node-gsettings-wrapper.svg)](https://www.npmjs.com/package/node-gsettings-wrapper)
 [![Build Status](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper.svg?branch=master)](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper)
 [![Coverage Status](https://coveralls.io/repos/github/SebastianSchmidt/node-gsettings-wrapper/badge.svg)](https://coveralls.io/github/SebastianSchmidt/node-gsettings-wrapper)
 
