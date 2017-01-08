@@ -12,7 +12,7 @@ describe("Schema", () => {
       expect(Schema.getAll()).to.be.an.instanceof(Array);
     });
 
-    it("should return array which contains schemata", () => {
+    it("should return array which contains schemas", () => {
       const schema = Schema.findById("org.gtk.Demo");
       expect(Schema.getAll()).to.contain(schema);
     });

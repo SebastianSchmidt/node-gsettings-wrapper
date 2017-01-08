@@ -18,7 +18,7 @@ npm install node-gsettings-wrapper --save
 ```javascript
 const { Schema, Key } = require("node-gsettings-wrapper");
 
-// Display all available schemata:
+// Display all available schemas:
 Schema.getAll().forEach((schema) => {
   console.log(schema.getId());
 });
@@ -34,7 +34,7 @@ Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
 
 | Version   | Planned Features                                                     |
 |-----------|----------------------------------------------------------------------|
-| 0.1.x     | Get available schemata and keys.                                     |
+| 0.1.x     | Get available schemas and keys.                                     |
 | 0.2.x     | Get the value of a key.                                              |
 | 0.3.x     | Monitor a key for changes.                                           |
 | 0.4.x     | Monitor a schema for changes.                                        |
