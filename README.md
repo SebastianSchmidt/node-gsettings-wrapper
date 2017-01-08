@@ -24,7 +24,7 @@ Schema.getAll().forEach((schema) => {
 });
 
 // Display all keys of schema org.gtk.Demo:
-Schema.getById("org.gtk.Demo").getKeys().forEach((key) => {
+Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
   console.log(key.getId());
 });
 ```

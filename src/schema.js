@@ -29,7 +29,7 @@ export default class Schema {
 
   }
 
-  static getById(id) {
+  static findById(id) {
 
     if (!Schema.exists(id)) {
       return null;
