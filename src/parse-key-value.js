@@ -1,4 +1,4 @@
-export function parseKeyValue(output) {
+export default function parseKeyValue(output) {
 
   if (output === null || output === undefined) {
     return null;

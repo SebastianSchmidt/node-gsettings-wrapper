@@ -1,7 +1,7 @@
 import { describe, it } from "mocha";
 import { expect } from "chai";
 
-import { parseKeyValue } from "../src/parse-key-value";
+import parseKeyValue from "../src/parse-key-value";
 
 describe("parseKeyValue", () => {
 

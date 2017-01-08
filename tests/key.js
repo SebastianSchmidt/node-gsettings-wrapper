@@ -39,4 +39,14 @@ describe("Key", () => {
 
   });
 
+  describe("#getValue", () => {
+
+    it("should return parsed value", () => {
+      const schema = new Schema("org.gtk.Demo");
+      const key = new Key(schema, "color");
+      expect(key.getValue()).to.be.a("string");
+    });
+
+  });
+
 });

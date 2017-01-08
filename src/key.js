@@ -1,4 +1,7 @@
+import { spawnSync } from "child_process";
+
 import Schema from "./schema";
+import parseKeyValue from "./parse-key-value";
 
 export default class Key {
 
@@ -23,6 +26,12 @@ export default class Key {
 
   getId() {
     return this._id;
+  }
+
+  getValue() {
+    const process = spawnSync("gsettings",
+      ["get", this._schema.getId(), this.getId()]);
+    return parseKeyValue(process.stdout);
   }
 
 }
