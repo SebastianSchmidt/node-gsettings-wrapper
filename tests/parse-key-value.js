@@ -15,6 +15,10 @@ describe("parseKeyValue", () => {
       expect(parseKeyValue("'Hello World'")).to.equal("Hello World");
     });
 
+    it("should return empty string", () => {
+      expect(parseKeyValue("''")).to.equal("");
+    });
+
   });
 
   describe("Number", () => {
@@ -29,6 +33,14 @@ describe("parseKeyValue", () => {
 
     it("should return parsed negative number", () => {
       expect(parseKeyValue("-123")).to.equal(-123);
+    });
+
+    it("should return parsed positive floating point number", () => {
+      expect(parseKeyValue("123.45")).to.equal(123.45);
+    });
+
+    it("should return parsed negative floating point number", () => {
+      expect(parseKeyValue("-42.24")).to.equal(-42.24);
     });
 
   });
