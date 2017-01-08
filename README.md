@@ -14,7 +14,7 @@ npm install node-gsettings-wrapper --save
 ```
 
 
-## Examples
+## Basic usage
 
 ```javascript
 const { Schema, Key } = require("node-gsettings-wrapper");
@@ -24,9 +24,21 @@ Schema.getAll().forEach((schema) => {
   console.log(schema.getId());
 });
 
-// Display all keys of schema org.gtk.Demo:
+// Display all keys of a schema:
 Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
   console.log(key.getId());
+});
+
+// Display the value of a key:
+const colorKey = Key.findById("org.gtk.Demo", "color");
+console.log(colorKey.getValue());
+
+// Display the values of all keys:
+Schema.getAll().forEach((schema) => {
+  console.log(schema.getId());
+  schema.getKeys().forEach((key) => {
+    console.log(" - " + key.getId() + ": " + key.getValue());
+  });
 });
 ```
 
