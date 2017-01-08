@@ -199,6 +199,18 @@ describe("parseKeyValue", () => {
 
   });
 
+  describe("Objectpath", () => {
+
+    it("should return string", () => {
+      expect(parseKeyValue("objectpath '/test'")).to.be.a("string");
+    });
+
+    it("should return string without prefix", () => {
+      expect(parseKeyValue("objectpath '/test'")).to.equal("/test");
+    });
+
+  });
+
   describe("Other", () => {
 
     it("should return null if output is null", () => {

@@ -27,6 +27,9 @@ export default function parseKeyValue(output) {
     case TYPE_DICTIONARY:
       result = parseDictionary(value);
       break;
+    case TYPE_OBJECTPATH:
+      result = parseObjectpath(value);
+      break;
   }
 
   return result;
@@ -42,6 +45,7 @@ const TYPE_BOOLEAN = Symbol("Boolean");
 const TYPE_ARRAY = Symbol("Array");
 const TYPE_TUPLE = Symbol("Tuple");
 const TYPE_DICTIONARY = Symbol("Dictionary");
+const TYPE_OBJECTPATH = Symbol("Objectpath");
 const TYPE_UNKNOWN = Symbol("unknown");
 
 function detectValueType(output) {
@@ -60,6 +64,8 @@ function detectValueType(output) {
     return TYPE_TUPLE;
   } else if (isDictionary(value)) {
     return TYPE_DICTIONARY;
+  } else if (isObjectpath(value)) {
+    return TYPE_OBJECTPATH;
   } else {
     return TYPE_UNKNOWN;
   }
@@ -243,4 +249,15 @@ function parseDictionary(value) {
 
   return result;
 
+}
+
+
+// Objectpath:
+
+function isObjectpath(value) {
+  return value.startsWith("objectpath ");
+}
+
+function parseObjectpath(value) {
+  return parseString(value.substring(10).trim());
 }
