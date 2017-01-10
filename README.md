@@ -52,9 +52,7 @@ GSettings.Schema.getAll().forEach((schema) => {
 
 | Version   | Planned Features                                                     |
 |-----------|----------------------------------------------------------------------|
-| 0.1.x     | Get available schemas and keys.                                     |
-| 0.2.x     | Get the value of a key.                                              |
-| 0.3.x     | Monitor a key for changes.                                           |
-| 0.4.x     | Monitor a schema for changes.                                        |
-| 0.5.x     | Set the value of a key. Set the value of a key to the default value. |
+| 0.4.x     | Monitor a key for changes.                                           |
+| 0.5.x     | Monitor a schema for changes.                                        |
+| 0.6.x     | Set the value of a key. Set the value of a key to the default value. |
 | 1.0.0     | Support all gsettings commands and options.                          |
