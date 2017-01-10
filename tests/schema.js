@@ -1,10 +1,31 @@
-import { describe, it } from "mocha";
+import { describe, it, beforeEach, afterEach } from "mocha";
 import { expect } from "chai";
+import { stub } from "sinon";
+
+import childProcess, { spawnSync } from "child_process";
 
 import Schema from "../src/schema";
 import Key from "../src/key";
 
 describe("Schema", () => {
+
+  beforeEach(() => {
+
+    stub(childProcess, "spawnSync");
+
+    spawnSync.withArgs("gsettings", ["list-schemas"])
+      .returns({ status: 0, stdout: "org.example\norg.lorem.ipsum\n" });
+
+    spawnSync.withArgs("gsettings", ["list-keys", "org.example"])
+      .returns({ status: 0, stdout: "hello\nworld\n" });
+    spawnSync.withArgs("gsettings", ["list-keys", "unavailable"])
+      .returns({ status: 1 });
+
+  });
+
+  afterEach(() => {
+    spawnSync.restore();
+  });
 
   describe("#getAll", () => {
 
@@ -13,8 +34,11 @@ describe("Schema", () => {
     });
 
     it("should return array which contains schemas", () => {
-      const schema = Schema.findById("org.gtk.Demo");
-      expect(Schema.getAll()).to.contain(schema);
+      const expectedSchemas = [
+        new Schema("org.example"),
+        new Schema("org.lorem.ipsum")
+      ];
+      expect(Schema.getAll()).to.deep.equal(expectedSchemas);
     });
 
   });
@@ -30,7 +54,7 @@ describe("Schema", () => {
     });
 
     it("should return true if there is a schema with the id", () => {
-      expect(Schema.exists("org.gtk.Demo")).to.be.true;
+      expect(Schema.exists("org.example")).to.be.true;
     });
 
   });
@@ -42,8 +66,7 @@ describe("Schema", () => {
     });
 
     it("should return schema object it there is a schema with the id", () => {
-      expect(Schema.findById("org.gtk.Demo"))
-        .to.be.an.instanceof(Schema);
+      expect(Schema.findById("org.example")).to.be.an.instanceof(Schema);
     });
 
   });
@@ -51,7 +74,7 @@ describe("Schema", () => {
   describe("#getId", () => {
 
     it("should return schema id", () => {
-      const id = "org.gtk.Demo";
+      const id = "org.example";
       const schema = Schema.findById(id);
       expect(schema.getId()).to.be.equal(id);
     });
@@ -61,14 +84,17 @@ describe("Schema", () => {
   describe("#getKeys", () => {
 
     it("should return array", () => {
-      const schema = Schema.findById("org.gtk.Demo");
+      const schema = Schema.findById("org.example");
       expect(schema.getKeys()).to.be.an.instanceof(Array);
     });
 
     it("should return array which contains keys", () => {
-      const schema = Schema.findById("org.gtk.Demo");
-      const expectedKey = new Key(schema, "color");
-      expect(schema.getKeys()).to.contain(expectedKey);
+      const schema = Schema.findById("org.example");
+      const expectedKeys = [
+        new Key(schema, "hello"),
+        new Key(schema, "world")
+      ];
+      expect(schema.getKeys()).to.deep.equal(expectedKeys);
     });
 
   });

@@ -1,10 +1,25 @@
-import { describe, it } from "mocha";
+import { describe, it, beforeEach, afterEach } from "mocha";
 import { expect } from "chai";
+import { stub } from "sinon";
+
+import childProcess, { spawnSync } from "child_process";
 
 import Schema from "../src/schema";
 import Key from "../src/key";
 
 describe("Key", () => {
+
+  beforeEach(() => {
+    stub(childProcess, "spawnSync");
+    spawnSync.withArgs("gsettings", ["get", "org.example", "unavailable"])
+      .returns({ status: 1 });
+    spawnSync.withArgs("gsettings", ["get", "org.example", "available"])
+      .returns({ status: 0, stdout: "Hello World!" });
+  });
+
+  afterEach(() => {
+    spawnSync.restore();
+  });
 
   describe("#exists", () => {
 
@@ -17,11 +32,11 @@ describe("Key", () => {
     });
 
     it("should return false if there is no key with the id", () => {
-      expect(Key.exists("org.gtk.Demo", "unavailable")).to.be.false;
+      expect(Key.exists("org.example", "unavailable")).to.be.false;
     });
 
     it("should return true if there is a key with the id", () => {
-      expect(Key.exists("org.gtk.Demo", "color")).to.be.true;
+      expect(Key.exists("org.example", "available")).to.be.true;
     });
 
   });
@@ -29,11 +44,11 @@ describe("Key", () => {
   describe("#findById", () => {
 
     it("should return null if there is no key with the id", () => {
-      expect(Key.findById("org.gtk.Demo", "unavailable")).to.be.null;
+      expect(Key.findById("org.example", "unavailable")).to.be.null;
     });
 
     it("should return key object it there is a key with the id", () => {
-      expect(Key.findById("org.gtk.Demo", "color")).to.be.an.instanceof(Key);
+      expect(Key.findById("org.example", "available")).to.be.an.instanceof(Key);
     });
 
   });
@@ -74,7 +89,7 @@ describe("Key", () => {
   describe("#getValue", () => {
 
     it("should return parsed value", () => {
-      const key = Key.findById("org.gtk.Demo", "color");
+      const key = Key.findById("org.example", "available");
       expect(key.getValue()).to.be.a("string");
     });
 

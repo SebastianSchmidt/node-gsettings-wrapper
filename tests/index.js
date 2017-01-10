@@ -9,6 +9,10 @@ describe("GSettings", () => {
     expect(GSettings).to.be.an("object");
   });
 
+  it("should export isAvailable", () => {
+    expect(GSettings.isAvailable).to.be.a("function");
+  });
+
   it("should export Schema", () => {
     expect(GSettings.Schema).to.be.a("function");
   });
