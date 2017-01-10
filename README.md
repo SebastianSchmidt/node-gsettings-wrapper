@@ -17,24 +17,29 @@ npm install node-gsettings-wrapper --save
 ## Basic usage
 
 ```javascript
-const { Schema, Key } = require("node-gsettings-wrapper");
+const GSettings = require("node-gsettings-wrapper");
+
+if (!GSettings.isAvailable()) {
+  console.log("The gsettings command line tool is not available.");
+  process.exit(1);
+}
 
 // Display all available schemas:
-Schema.getAll().forEach((schema) => {
+GSettings.Schema.getAll().forEach((schema) => {
   console.log(schema.getId());
 });
 
 // Display all keys of a schema:
-Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
+GSettings.Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
   console.log(key.getId());
 });
 
 // Display the value of a key:
-const colorKey = Key.findById("org.gtk.Demo", "color");
+const colorKey = GSettings.Key.findById("org.gtk.Demo", "color");
 console.log(colorKey.getValue());
 
 // Display the values of all keys:
-Schema.getAll().forEach((schema) => {
+GSettings.Schema.getAll().forEach((schema) => {
   console.log(schema.getId());
   schema.getKeys().forEach((key) => {
     console.log(" - " + key.getId() + ": " + key.getValue());
