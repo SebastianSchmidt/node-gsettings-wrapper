@@ -14,11 +14,12 @@ npm install node-gsettings-wrapper --save
 ```
 
 
-## Basic usage
+## Basic Usage
 
 ```javascript
 const GSettings = require("node-gsettings-wrapper");
 
+// Check if GSettings is available:
 if (!GSettings.isAvailable()) {
   console.log("The gsettings command line tool is not available.");
   process.exit(1);
@@ -38,6 +39,14 @@ GSettings.Schema.findById("org.gtk.Demo").getKeys().forEach((key) => {
 const colorKey = GSettings.Key.findById("org.gtk.Demo", "color");
 console.log(colorKey.getValue());
 
+// Monitor a key for value changes:
+const removeListener = colorKey.addListener((key, value) => {
+  console.log("New value: " + value);
+});
+
+// Terminate monitoring after 5 seconds:
+setTimeout(removeListener, 5000);
+
 // Display the values of all keys:
 GSettings.Schema.getAll().forEach((schema) => {
   console.log(schema.getId());
@@ -52,7 +61,6 @@ GSettings.Schema.getAll().forEach((schema) => {
 
 | Version   | Planned Features                                                     |
 |-----------|----------------------------------------------------------------------|
-| 0.4.x     | Monitor a key for changes.                                           |
 | 0.5.x     | Monitor a schema for changes.                                        |
 | 0.6.x     | Set the value of a key. Set the value of a key to the default value. |
 | 1.0.0     | Support all gsettings commands and options.                          |

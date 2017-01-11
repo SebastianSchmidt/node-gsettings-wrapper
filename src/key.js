@@ -1,4 +1,4 @@
-import { spawnSync } from "child_process";
+import { spawnSync, spawn } from "child_process";
 
 import Schema from "./schema";
 import parseKeyValue from "./parse-key-value";
@@ -27,7 +27,7 @@ export default class Key {
     if (!Key.exists(schemaId, keyId)) {
       return null;
     }
-    
+
     return new Key(new Schema(schemaId), keyId);
 
   }
@@ -59,6 +59,29 @@ export default class Key {
     const process = spawnSync("gsettings",
       ["get", this._schema.getId(), this.getId()]);
     return parseKeyValue(process.stdout);
+  }
+
+  addListener(listener) {
+
+    if (typeof listener !== "function") {
+      throw new TypeError("listener is not a function.");
+    }
+
+    const schemaId = this._schema.getId();
+    const keyId = this.getId();
+
+    const process = spawn("gsettings", ["monitor", schemaId, keyId]);
+
+    process.stdout.on("data", (data) => {
+      const unparsedValue = data.toString().trim().replace(keyId + ":", "");
+      const value = parseKeyValue(unparsedValue);
+      listener(this, value);
+    });
+
+    return () => {
+      process.kill();
+    };
+
   }
 
 }
