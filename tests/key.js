@@ -1,16 +1,20 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
-import { expect } from "chai";
-import { stub } from "sinon";
+import chai, { expect } from "chai";
+import sinonChai from "sinon-chai";
+import { stub, spy } from "sinon";
 
-import childProcess, { spawnSync } from "child_process";
+import childProcess, { spawnSync, spawn } from "child_process";
 
 import Schema from "../src/schema";
 import Key from "../src/key";
+
+chai.use(sinonChai);
 
 describe("Key", () => {
 
   beforeEach(() => {
     stub(childProcess, "spawnSync");
+    stub(childProcess, "spawn");
     spawnSync.withArgs("gsettings", ["get", "org.example", "unavailable"])
       .returns({ status: 1 });
     spawnSync.withArgs("gsettings", ["get", "org.example", "available"])
@@ -19,6 +23,7 @@ describe("Key", () => {
 
   afterEach(() => {
     spawnSync.restore();
+    spawn.restore();
   });
 
   describe("#exists", () => {
@@ -90,7 +95,53 @@ describe("Key", () => {
 
     it("should return parsed value", () => {
       const key = Key.findById("org.example", "available");
-      expect(key.getValue()).to.be.a("string");
+      expect(key.getValue()).to.be.equal("Hello World!");
+    });
+
+  });
+
+  describe("#addListener", () => {
+
+    let key;
+    let process;
+
+    beforeEach(() => {
+
+      key = Key.findById("org.example", "available");
+
+      process = {
+        status: 0,
+        stdout: {
+          on: (event, callback) => {
+            callback("available: 'Hello World!'");
+          }
+        },
+        kill: spy()
+      };
+
+      spawn.withArgs("gsettings", ["monitor", "org.example", "available"])
+        .returns(process);
+
+    });
+
+    it("should call listener with changed value", () => {
+      const listener = spy();
+      key.addListener(listener);
+      expect(listener).to.have.been.calledWith(key, "Hello World!");
+    });
+
+    it("should return a function", () => {
+      expect(key.addListener(spy())).to.be.a("function");
+    });
+
+    it("should return a function that removes listener", () => {
+      const removeListener = key.addListener(spy());
+      removeListener();
+      expect(process.kill).to.have.been.calledOnce;
+    });
+
+    it("should throw TypeError if listener is not a function", () => {
+      expect(() => { key.addListener(123); }).to.throw(TypeError);
     });
 
   });
