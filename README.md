@@ -40,12 +40,20 @@ const colorKey = GSettings.Key.findById("org.gtk.Demo", "color");
 console.log(colorKey.getValue());
 
 // Monitor a key for value changes:
-const removeListener = colorKey.addListener((key, value) => {
+const removeKeyListener = colorKey.addListener((key, value) => {
   console.log("New value: " + value);
 });
 
-// Terminate monitoring after 5 seconds:
-setTimeout(removeListener, 5000);
+// Terminate key monitoring after 5 seconds:
+setTimeout(removeKeyListener, 5000);
+
+// Monitor a schema for changes:
+const removeSchemaListener = schema.addListener((key, value) => {
+  console.log("New value: " + key.getId() + ": " + value);
+});
+
+// Terminate schema monitoring after 5 seconds:
+setTimeout(removeSchemaListener, 5000);
 
 // Display the values of all keys:
 GSettings.Schema.getAll().forEach((schema) => {
