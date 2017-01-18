@@ -130,10 +130,6 @@ describe("Key", () => {
       expect(listener).to.have.been.calledWith(key, "Hello World!");
     });
 
-    it("should return a function", () => {
-      expect(key.addListener(spy())).to.be.a("function");
-    });
-
     it("should return a function that removes listener", () => {
       const removeListener = key.addListener(spy());
       removeListener();
@@ -142,6 +138,10 @@ describe("Key", () => {
 
     it("should throw TypeError if listener is not a function", () => {
       expect(() => { key.addListener(123); }).to.throw(TypeError);
+    });
+
+    it("should return a function", () => {
+      expect(key.addListener(spy())).to.be.a("function");
     });
 
   });

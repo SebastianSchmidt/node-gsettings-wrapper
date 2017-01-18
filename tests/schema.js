@@ -1,17 +1,21 @@
 import { describe, it, beforeEach, afterEach } from "mocha";
-import { expect } from "chai";
-import { stub } from "sinon";
+import chai, { expect } from "chai";
+import { stub, spy } from "sinon";
+import sinonChai from "sinon-chai";
 
-import childProcess, { spawnSync } from "child_process";
+import childProcess, { spawnSync, spawn } from "child_process";
 
 import Schema from "../src/schema";
 import Key from "../src/key";
+
+chai.use(sinonChai);
 
 describe("Schema", () => {
 
   beforeEach(() => {
 
     stub(childProcess, "spawnSync");
+    stub(childProcess, "spawn");
 
     spawnSync.withArgs("gsettings", ["list-schemas"])
       .returns({ status: 0, stdout: "org.example\norg.lorem.ipsum\n" });
@@ -25,6 +29,7 @@ describe("Schema", () => {
 
   afterEach(() => {
     spawnSync.restore();
+    spawn.restore();
   });
 
   describe("#getAll", () => {
@@ -95,6 +100,54 @@ describe("Schema", () => {
         new Key(schema, "world")
       ];
       expect(schema.getKeys()).to.deep.equal(expectedKeys);
+    });
+
+  });
+
+  describe("#addListener", () => {
+
+    let schema;
+    let key;
+    let process;
+
+    beforeEach(() => {
+
+      schema = Schema.findById("org.example");
+      key = new Key(schema, "message");
+
+      process = {
+        status: 0,
+        stdout: {
+          on: (event, callback) => {
+            callback("message: 'Hello World!'");
+          }
+        },
+        kill: spy()
+      };
+
+      spawn.withArgs("gsettings", ["monitor", "org.example"])
+        .returns(process);
+
+    });
+
+    it("should call listener with changed key and value", () => {
+      const listener = spy();
+      schema.addListener(listener);
+      expect(listener).to.have.been.calledWith(key, "Hello World!");
+    });
+
+    it("should return a function that removes listener", () => {
+      const removeListener = schema.addListener(spy());
+      removeListener();
+      expect(process.kill).to.have.been.calledOnce;
+    });
+
+    it("should throw TypeError if listener is not a function", () => {
+      expect(() => { schema.addListener(123); }).to.throw(TypeError);
+    });
+
+    it("should return a function", () => {
+      expect(schema.addListener(spy())).to.be.a("function");
     });
 
   });
