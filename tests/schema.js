@@ -128,6 +128,26 @@ describe("Schema", () => {
 
   });
 
+  describe("#findKeyById", () => {
+
+    it("should return key object it there is a key with the id", () => {
+      const schema = Schema.findById("org.example");
+      const expectedKey = new Key(schema, "available");
+      expect(schema.findKeyById("available")).to.deep.equal(expectedKey);
+    });
+
+    it("should return null if there is no key with the id", () => {
+      const schema = Schema.findById("org.example");
+      expect(schema.findKeyById("unavailable")).to.be.null;
+    });
+
+    it("should throw TypeError if keyId is not a string", () => {
+      const schema = Schema.findById("org.example");
+      expect(() => { schema.findKeyById(123); }).to.throw(TypeError);
+    });
+
+  });
+
   describe("#addListener", () => {
 
     let schema;
