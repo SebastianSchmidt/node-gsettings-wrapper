@@ -59,6 +59,16 @@ export default class Schema {
 
   }
 
+  containsKey(keyId) {
+
+    if (typeof keyId !== "string") {
+      throw new TypeError("keyId is not a string.");
+    }
+
+    return Key.exists(this._id, keyId);
+
+  }
+
   addListener(listener) {
 
     if (typeof listener !== "function") {

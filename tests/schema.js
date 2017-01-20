@@ -25,6 +25,11 @@ describe("Schema", () => {
     spawnSync.withArgs("gsettings", ["list-keys", "unavailable"])
       .returns({ status: 1 });
 
+    spawnSync.withArgs("gsettings", ["get", "org.example", "unavailable"])
+      .returns({ status: 1 });
+    spawnSync.withArgs("gsettings", ["get", "org.example", "available"])
+      .returns({ status: 0, stdout: "Hello World!" });
+
   });
 
   afterEach(() => {
@@ -100,6 +105,25 @@ describe("Schema", () => {
         new Key(schema, "world")
       ];
       expect(schema.getKeys()).to.deep.equal(expectedKeys);
+    });
+
+  });
+
+  describe("#containsKey", () => {
+
+    it("should return true if schema contains key", () => {
+      const schema = Schema.findById("org.example");
+      expect(schema.containsKey("available")).to.be.true;
+    });
+
+    it("should return false if schema does not contain key", () => {
+      const schema = Schema.findById("org.example");
+      expect(schema.containsKey("unavailable")).to.be.false;
+    });
+
+    it("should throw TypeError if keyId is not a string", () => {
+      const schema = Schema.findById("org.example");
+      expect(() => { schema.containsKey(123); }).to.throw(TypeError);
     });
 
   });
