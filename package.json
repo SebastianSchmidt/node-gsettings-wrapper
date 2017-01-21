@@ -9,8 +9,10 @@
   ],
   "main": "lib/index.js",
   "files": [
-    "lib/"
+    "lib/",
+    "docs/"
   ],
+  "tonicExampleFilename": "docs/api/example.js",
   "scripts": {
     "test": "gulp dev:test",
     "test-travis": "gulp dev:test && gulp prepare-publish",
