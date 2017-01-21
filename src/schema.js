@@ -59,6 +59,14 @@ export default class Schema {
 
   }
 
+  containsKey(keyId) {
+    return Key.exists(this._id, keyId);
+  }
+
+  findKeyById(keyId) {
+    return Key.findById(this._id, keyId);
+  }
+
   addListener(listener) {
 
     if (typeof listener !== "function") {

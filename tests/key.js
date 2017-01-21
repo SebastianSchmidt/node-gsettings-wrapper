@@ -29,11 +29,11 @@ describe("Key", () => {
   describe("#exists", () => {
 
     it("should throw TypeError if schemaId is not a string", () => {
-      expect(() => { Key.exists(123); }).to.throw(TypeError);
+      expect(() => { Key.exists(123, "available"); }).to.throw(TypeError);
     });
 
     it("should throw TypeError if keyId is not a string", () => {
-      expect(() => { Key.exists("org.gtk.Demo", 123); }).to.throw(TypeError);
+      expect(() => { Key.exists("org.example", 123); }).to.throw(TypeError);
     });
 
     it("should return false if there is no key with the id", () => {
@@ -48,12 +48,21 @@ describe("Key", () => {
 
   describe("#findById", () => {
 
+    it("should return key object it there is a key with the id", () => {
+      const key = new Key(new Schema("org.example"), "available");
+      expect(Key.findById("org.example", "available")).to.deep.equal(key);
+    });
+
     it("should return null if there is no key with the id", () => {
       expect(Key.findById("org.example", "unavailable")).to.be.null;
     });
 
-    it("should return key object it there is a key with the id", () => {
-      expect(Key.findById("org.example", "available")).to.be.an.instanceof(Key);
+    it("should throw TypeError if schemaId is not a string", () => {
+      expect(() => { Key.findById(123, "available"); }).to.throw(TypeError);
+    });
+
+    it("should throw TypeError if keyId is not a string", () => {
+      expect(() => { Key.findById("org.example", 123); }).to.throw(TypeError);
     });
 
   });
