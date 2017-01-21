@@ -1,22 +1,3 @@
-# node-gsettings-wrapper
-
-[![NPM version](https://img.shields.io/npm/v/node-gsettings-wrapper.svg)](https://www.npmjs.com/package/node-gsettings-wrapper)
-[![Build Status](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper.svg?branch=master)](https://travis-ci.org/SebastianSchmidt/node-gsettings-wrapper)
-[![Coverage Status](https://coveralls.io/repos/github/SebastianSchmidt/node-gsettings-wrapper/badge.svg?branch=master)](https://coveralls.io/github/SebastianSchmidt/node-gsettings-wrapper?branch=master)
-
-Wrapper around the gsettings command line tool.
-
-
-## Installation
-
-```
-npm install node-gsettings-wrapper --save
-```
-
-
-## Basic Usage
-
-```javascript
 const GSettings = require("node-gsettings-wrapper");
 
 // Check if GSettings is available:
@@ -63,14 +44,3 @@ const removeSchemaListener = schema.addListener((key, value) => {
 
 // Terminate schema monitoring after 5 seconds:
 setTimeout(removeSchemaListener, 5000);
-```
-
-[Read the API documentation.](docs/api/index.md)
-
-
-## Roadmap
-
-| Version   | Planned Features                                                     |
-|-----------|----------------------------------------------------------------------|
-| 0.7.x     | Set the value of a key. Set the value of a key to the default value. |
-| 1.0.0     | Support all gsettings commands and options.                          |
