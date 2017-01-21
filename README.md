@@ -64,6 +64,8 @@ GSettings.Schema.getAll().forEach((schema) => {
 });
 ```
 
+[Read the API documentation.](docs/api/index.md)
+
 
 ## Roadmap
 
